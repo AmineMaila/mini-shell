@@ -6,21 +6,31 @@
 #    By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/01/29 13:42:04 by mmaila            #+#    #+#              #
-#    Updated: 2024/02/24 15:05:55 by mmaila           ###   ########.fr        #
+#    Updated: 2025/04/30 19:42:42 by mmaila           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME			= 		minishell
+NAME            =       minishell
 
-CC				= 		cc
+CC              =       cc
 
-CFLAGS			= 		-Wall -Werror -Wextra -fsanitize=address
+# OS detection
+UNAME_S         :=      $(shell uname -s)
 
-LIBFT			=		./libft/libft.a
+ifeq ($(UNAME_S), Linux)
+	READLINE_INC    =
+	READLINE_LIB    =
+else ifeq ($(UNAME_S), Darwin)
+	READLINEDIR     = $(shell brew --prefix readline)
+	READLINE_INC    = -I$(READLINEDIR)/include
+	READLINE_LIB    = -L$(READLINEDIR)/lib
+endif
 
-READLINEDIR		=		$(shell brew --prefix readline)
+CFLAGS          =       -Wall -Werror -Wextra
 
-INCLUDE			=		./Includes/minishell.h ./libft/libft.h
+LIBFT           =       ./libft/libft.a
+
+INCLUDE         =       ./Includes/minishell.h ./libft/libft.h
 
 SRCS			= 		\
 						./parsing/tokenize.c \
@@ -63,15 +73,16 @@ all : $(NAME)
 
 %.o : %.c $(INCLUDE)
 	@echo "\033[5;34mCompiling ${notdir $<}\033[0m"
-	@$(CC) $(CFLAGS) -c $< -o $@ -I$(READLINEDIR)/include
+	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE_INC)
 
 $(NAME) : $(LIBFT) $(OBJS) $(INCLUDE)
-	@$(CC) $(CFLAGS) $(LIBFT) $(OBJS) -o $(NAME) -L$(READLINEDIR)/lib -lreadline
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(READLINE_LIB) -lreadline $(LIBFT) 
 	@echo "\033[1;32mSUCCESS\033[0m"
 
 $(LIBFT) :
 	@echo "\033[1;33mBuilding LIBFT...\033[0m"
 	@make -C ./libft
+	@test -f $(LIBFT) || (echo "\033[1;31mERROR: libft.a not created\033[0m" && exit 1)
 	@echo "\033[1;33mBuilding Minishell...\033[0m"
 
 clean :
@@ -84,3 +95,4 @@ fclean : clean
 	@rm -rf $(LIBFT)
 
 re : fclean all
+

@@ -6,7 +6,7 @@
 /*   By: mmaila <mmaila@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/29 20:25:42 by nazouz            #+#    #+#             */
-/*   Updated: 2024/05/23 22:53:55 by mmaila           ###   ########.fr       */
+/*   Updated: 2025/04/30 19:33:03 by mmaila           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@
 # define MSG "\033[2;30m-\033[0m\033[1;36m4.81\033[1;32m × \033[0m"
 
 # include "../libft/libft.h"
+# include <sys/wait.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
