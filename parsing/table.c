@@ -64,6 +64,8 @@ int	open_heredocs(t_mini *mini, int pipeline)
 		if (curr->flag == HEREDOC)
 		{
 			heredocfd = here_doc(mini, curr->next);
+            if (heredocfd == -1)
+                continue;
 			if (mini->exit_status == 7)
 				return (close(heredocfd), closefds(mini), 0);
 			if (curr == mini->table[pipeline].redin)

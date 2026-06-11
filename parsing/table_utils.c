@@ -46,10 +46,8 @@ int	get_table_size(t_list_parse *lst)
 int	get_line_size(t_mini *mini, int pipe_line)
 {
 	t_list_parse	*current;
-	int				i;
 	int				size;
 
-	i = 0;
 	current = get_pipe_line(mini->lst, pipe_line);
 	size = 0;
 	while (current && current->flag != PIPE)

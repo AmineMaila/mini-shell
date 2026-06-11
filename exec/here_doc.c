@@ -47,7 +47,7 @@ int	here_doc(t_mini *mini, t_list_parse *next)
 	int	status;
 
 	if (!next)
-		return (fd[0]);
+		return (-1);
 	if (pipe(fd) == -1)
 		ft_exit(mini, NULL, NULL, errno);
 	id = fork();

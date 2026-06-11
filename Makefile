@@ -69,30 +69,47 @@ SRCS			= 		\
 
 OBJS			= 		$(SRCS:.c=.o)
 
+# Colors
+RESET   = \033[0m
+BOLD    = \033[1m
+
+RED     = \033[31m
+GREEN   = \033[32m
+YELLOW  = \033[33m
+BLUE    = \033[34m
+CYAN    = \033[36m
+
+# Symbols
+OK      = ✓
+BUILD   = ▶
+CLEAN   = ✗
+
+
 all : $(NAME)
 
 %.o : %.c $(INCLUDE)
-	@echo "\033[5;34mCompiling ${notdir $<}\033[0m"
+	@printf "$(BLUE)$(BUILD) Compiling %-40s$(RESET)\n" "$(notdir $<)"
 	@$(CC) $(CFLAGS) -c $< -o $@ $(READLINE_INC)
 
 $(NAME) : $(LIBFT) $(OBJS) $(INCLUDE)
-	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(READLINE_LIB) -lreadline $(LIBFT) 
-	@echo "\033[1;32mSUCCESS\033[0m"
+	@printf "$(CYAN)$(BUILD) Linking $(NAME)...$(RESET)\n"
+	@$(CC) $(CFLAGS) $(OBJS) -o $(NAME) $(READLINE_LIB) -lreadline $(LIBFT)
+	@printf "$(GREEN)$(BOLD)$(OK) Build complete: $(NAME)$(RESET)\n"
 
 $(LIBFT) :
-	@echo "\033[1;33mBuilding LIBFT...\033[0m"
-	@make -C ./libft
-	@test -f $(LIBFT) || (echo "\033[1;31mERROR: libft.a not created\033[0m" && exit 1)
-	@echo "\033[1;33mBuilding Minishell...\033[0m"
+	@printf "$(YELLOW)$(BUILD) Building libft...$(RESET)\n"
+	@$(MAKE) -C ./libft
+	@test -f $(LIBFT) || (printf "$(RED)ERROR: libft.a not created$(RESET)\n" && exit 1)
+	@printf "$(CYAN)$(BUILD) Continuing minishell build...$(RESET)\n"
 
 clean :
-	@echo "\033[3;31mCleaning...\033[0m"
-	@rm -rf $(OBJS)
-	@make clean -C ./libft
+	@printf "$(RED)$(CLEAN) Cleaning object files...$(RESET)\n"
+	@rm -f $(OBJS)
+	@$(MAKE) clean -C ./libft
 
 fclean : clean
-	@rm -rf $(NAME) $(OBJS)
-	@rm -rf $(LIBFT)
+	@printf "$(RED)$(CLEAN) Removing binaries...$(RESET)\n"
+	@rm -f $(NAME)
+	@rm -f $(LIBFT)
 
 re : fclean all
-

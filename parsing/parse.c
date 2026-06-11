@@ -12,19 +12,6 @@
 
 #include "../Includes/minishell.h"
 
-void	split_line(t_list_parse *lst)
-{
-	int			nodes;
-
-	nodes = 0;
-	while (lst && lst->flag != PIPE)
-	{
-		if (lst->flag == COMMAND || lst->flag == ARG)
-			nodes++;
-		lst = lst->next;
-	}
-}
-
 void	print_syntax(char *str)
 {
 	ft_putstr_fd("minishell: syntax error near unexpected token ", 2);
@@ -39,9 +26,6 @@ void	print_syntax(char *str)
 
 int	syntax_error(t_list_parse *lst)
 {
-	int		i;
-
-	i = 0;
 	if (lst->flag == PIPE)
 		return (print_syntax(lst->str), lst->flag = ERR, 1);
 	while (lst)

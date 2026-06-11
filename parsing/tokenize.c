@@ -80,12 +80,10 @@ int	count_needed_spaces(char *str, int count, int was_space)
 
 void	input_lexer(t_mini *mini)
 {
-	int		i;
 	int		spaces_count;
 	int		was_space;
 	int		count;
 
-	i = 0;
 	count = 0;
 	was_space = 0;
 	spaces_count = count_needed_spaces(mini->input, count, was_space);

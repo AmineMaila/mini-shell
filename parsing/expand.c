@@ -82,9 +82,7 @@ void	expand_var(t_mini *mini, char **str)
 void	expansion(t_mini *mini, t_list_parse **curr)
 {
 	int				count;
-	int				i;
 
-	i = 0;
 	count = envvar_count((*curr)->str);
 	while (count--)
 		if ((*curr)->flag != LIM)
