@@ -4,7 +4,7 @@ Minishell is a simplified Unix shell written in C as part of the 1337/42 School 
 It supports basic command execution, built-ins, pipes, redirections, and environment variable expansion.  
 The goal is to understand how a shell works under the hood and implement core Unix principles from scratch.
 
-## 🛠️ Features
+## Features
 
 - Execute simple and piped commands
 - Built-in commands: `cd`, `echo`, `pwd`, `env`, `exit`, `export`, `unset`
@@ -14,7 +14,7 @@ The goal is to understand how a shell works under the hood and implement core Un
 - Signal handling (e.g., `Ctrl+C`, `Ctrl+\`)
 - Exit codes and error handling
 
-## ⚙️ Build Instructions
+## Build Instructions
 
 ### Install Dependencies
 
@@ -43,7 +43,7 @@ cd mini-shell
 make
 ```
 
-## 🚀 Usage
+## Usage
 
 ```bash
 ./minishell
